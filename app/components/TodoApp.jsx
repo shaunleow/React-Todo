@@ -13,18 +13,22 @@ var TodoApp = React.createClass({
         {
           id: uuid(),
           text: "Walk the dog",
+          completed: false,
         },
         {
           id: uuid(),
           text: "Clean the yard",
+          completed: true,
         },
         {
           id: uuid(),
           text: "Destroy the carpet",
+          completed: false,
         },
         {
           id: uuid(),
           text: "Bathe the dog",
+          completed: false,
         },
       ],
     };
@@ -37,9 +41,21 @@ var TodoApp = React.createClass({
         {
           id: uuid(),
           text: text,
+          completed: false,
         },
       ],
     });
+  },
+  handleToggle: function(id) {
+    // map let's us iterate over all our todos via the callback function and make changes to each
+    var updatedTodos = this.state.todos.map(todo => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+
+    this.setState({ todos: updatedTodos });
   },
   // pass in the two values thats going to come from TodoSearch component
   // this component maintains the state. the rest is presentational and responds to user interaction
@@ -56,7 +72,7 @@ var TodoApp = React.createClass({
       <div>
         {/* we need to pass in the prop we decided to name onSearch  */}
         <TodoSearch onSearch={this.handleSearch} />
-        <TodoList todos={todos} />
+        <TodoList todos={todos} onToggle={this.handleToggle} />
         {/* pass down the onAddTodo prop we created. call handleAddTodo function! */}
         <AddTodo onAddTodo={this.handleAddTodo} />
       </div>
