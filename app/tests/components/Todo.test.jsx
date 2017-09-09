@@ -1,20 +1,20 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-var expect = require("expect");
-var $ = require("jQuery");
-var TestUtils = require("react-addons-test-utils");
+var React = require('react');
+var ReactDOM = require('react-dom');
+var expect = require('expect');
+var $ = require('jQuery');
+var TestUtils = require('react-addons-test-utils');
 
-var Todo = require("Todo");
+var Todo = require('Todo');
 
-describe("Todo", () => {
-  it("should exist", () => {
+describe('Todo', () => {
+  it('should exist', () => {
     expect(Todo).toExist();
   });
 
-  it("should call onToggle prop with id on click", () => {
+  it('should call onToggle prop with id on click', () => {
     var todoData = {
       id: 199,
-      text: "Write todo.test.jsx test",
+      text: 'Write todo.test.jsx test',
       completed: true,
     };
     var spy = expect.createSpy();
@@ -31,3 +31,5 @@ describe("Todo", () => {
     expect(spy).toHaveBeenCalledWith(199);
   });
 });
+
+// <Todo {...todo}/> is the same with <Todo id={todo.id} text={todo.text} completed={todo.completed}/>

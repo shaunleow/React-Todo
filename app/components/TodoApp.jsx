@@ -1,37 +1,22 @@
-var React = require("react");
-var TodoList = require("TodoList");
-var AddTodo = require("AddTodo");
-var TodoSearch = require("TodoSearch");
-var uuid = require("node-uuid");
+var React = require('react');
+var uuid = require('node-uuid');
+
+var TodoList = require('TodoList');
+var AddTodo = require('AddTodo');
+var TodoSearch = require('TodoSearch');
+var TodoAPI = require('TodoAPI');
 
 var TodoApp = React.createClass({
   getInitialState: function() {
     return {
       showCompleted: false, // when start application, only show unfinished todos
-      searchText: "", // we want to return all todo items no matter what the text is
-      todos: [
-        {
-          id: uuid(),
-          text: "Walk the dog",
-          completed: false,
-        },
-        {
-          id: uuid(),
-          text: "Clean the yard",
-          completed: true,
-        },
-        {
-          id: uuid(),
-          text: "Destroy the carpet",
-          completed: false,
-        },
-        {
-          id: uuid(),
-          text: "Bathe the dog",
-          completed: false,
-        },
-      ],
+      searchText: '', // we want to return all todo items no matter what the text is
+      todos: TodoAPI.getTodos(), // start with local storage
     };
+  },
+  // this gets fired after either the props or state for the component changes
+  componentDidUpdate: function() {
+    TodoAPI.setTodos(this.state.todos); // any changes to the state will set todos
   },
   // we would like this to update the todos array which is a state property
   handleAddTodo: function(text) {
