@@ -51,13 +51,15 @@ var TodoApp = React.createClass({
     });
   },
   render: function() {
-    var { todos } = this.state;
+    var { todos, showCompleted, searchText } = this.state;
+    // render out search
+    var filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
 
     return (
       <div>
         {/* we need to pass in the prop we decided to name onSearch  */}
         <TodoSearch onSearch={this.handleSearch} />
-        <TodoList todos={todos} onToggle={this.handleToggle} />
+        <TodoList todos={filteredTodos} onToggle={this.handleToggle} />
         {/* pass down the onAddTodo prop we created. call handleAddTodo function! */}
         <AddTodo onAddTodo={this.handleAddTodo} />
       </div>
