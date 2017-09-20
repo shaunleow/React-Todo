@@ -62,11 +62,20 @@ var TodoApp = React.createClass({
 
     return (
       <div>
-        {/* we need to pass in the prop we decided to name onSearch  */}
-        <TodoSearch onSearch={this.handleSearch} />
-        <TodoList todos={filteredTodos} onToggle={this.handleToggle} />
-        {/* pass down the onAddTodo prop we created. call handleAddTodo function! */}
-        <AddTodo onAddTodo={this.handleAddTodo} />
+        <h1 className="page-title">Things To Do</h1>
+
+        <div className="row">
+          {/* small-centered = centers our grid on every display size from small up */}
+          <div className="column small-centered small-11 medium-6 large-5">
+            <div className="container">
+              {/* we need to pass in the prop we decided to name onSearch  */}
+              <TodoSearch onSearch={this.handleSearch} />
+              <TodoList todos={filteredTodos} onToggle={this.handleToggle} />
+              {/* pass down the onAddTodo prop we created. call handleAddTodo function! */}
+              <AddTodo onAddTodo={this.handleAddTodo} />
+            </div>
+          </div>
+        </div>
       </div>
     );
   },

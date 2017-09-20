@@ -1,8 +1,11 @@
-@import "base/variables";
+@import 'base/variables';
 
 // foundation
-@import "base/foundation-settings";
-@import "foundation";
+@import 'base/foundation-settings';
+@import 'foundation';
 @include foundation-everything;
 
 // Components
+@import 'components/container';
+@import 'components/page-title';
+@import 'components/todo';

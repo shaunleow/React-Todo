@@ -1,4 +1,4 @@
-var React = require("react");
+var React = require('react');
 
 var TodoSearch = React.createClass({
   handleSearch: function() {
@@ -13,7 +13,7 @@ var TodoSearch = React.createClass({
   },
   render: function() {
     return (
-      <div>
+      <div className="container__header">
         <div>
           <input
             type="search"

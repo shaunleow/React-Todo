@@ -1,0 +1,36 @@
+.todo {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  padding: 1rem;
+  // transition background colour
+  transition: background 0.3s ease;
+
+  p,
+  input {
+    // clear out the space
+    margin: 0;
+  }
+
+  // target individual text items. input container
+  > :first-child {
+    margin-right: 1rem;
+  }
+
+  // same as .todo:hover
+  &:hover {
+    background: $white-grey;
+  }
+}
+
+.todo__subtext {
+  color: $medium-grey;
+}
+
+.todo-completed {
+  p,
+  .todo-subtext {
+    color: $mediumlight-grey;
+    text-decoration: line-through;
+  }
+}
