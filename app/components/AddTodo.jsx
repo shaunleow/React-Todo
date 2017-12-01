@@ -1,15 +1,18 @@
 var React = require('react');
 var DeleteTodo = require('DeleteTodo');
+var { connect } = require('react-redux');
+var actions = require('actions');
 
-var AddTodo = React.createClass({
+export var AddTodo = React.createClass({
   onFormSubmit: function(event) {
     event.preventDefault();
     // pull the text from the field
     var todoText = this.refs.todoText.value;
+    var { dispatch } = this.props;
 
     if (todoText.length > 0) {
       this.refs.todoText.value = ''; // clear the value
-      this.props.onAddTodo(todoText); // choose to call it onAddTodo
+      dispatch(actions.addToDo(todoText)); // dispatch action
     } else {
       this.refs.todoText.focus(); // if there's no valid data it'll put the cursor back in the field automatically
     }
@@ -29,7 +32,7 @@ var AddTodo = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 });
 
-module.exports = AddTodo;
+export default connect()(AddTodo);

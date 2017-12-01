@@ -2,8 +2,8 @@ var React = require('react');
 var uuid = require('node-uuid');
 var moment = require('moment');
 
-var TodoList = require('TodoList');
-var AddTodo = require('AddTodo');
+import TodoList from 'TodoList';
+import AddTodo from 'AddTodo';
 var TodoSearch = require('TodoSearch');
 var TodoAPI = require('TodoAPI');
 
@@ -12,7 +12,7 @@ var TodoApp = React.createClass({
     return {
       showCompleted: false, // when start application, only show unfinished todos
       searchText: '', // we want to return all todo items no matter what the text is
-      todos: TodoAPI.getTodos(), // start with local storage
+      todos: TodoAPI.getTodos() // start with local storage
     };
   },
   // this gets fired after either the props or state for the component changes
@@ -29,30 +29,17 @@ var TodoApp = React.createClass({
           text: text,
           completed: false,
           createdAt: moment().unix(),
-          completedAt: undefined,
-        },
-      ],
+          completedAt: undefined
+        }
+      ]
     });
-  },
-  handleToggle: function(id) {
-    // map let's us iterate over all our todos via the callback function and make changes to each
-    var updatedTodos = this.state.todos.map(todo => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
-        // show timestamp if completed
-        todo.completedAt = todo.completed ? moment().unix() : undefined;
-      }
-      return todo;
-    });
-
-    this.setState({ todos: updatedTodos });
   },
   // pass in the two values thats going to come from TodoSearch component
   // this component maintains the state. the rest is presentational and responds to user interaction
   handleSearch: function(showCompleted, searchText) {
     this.setState({
       showCompleted: showCompleted,
-      searchText: searchText.toLowerCase(), // upper or lowercase wont affect search
+      searchText: searchText.toLowerCase() // upper or lowercase wont affect search
     });
   },
   render: function() {
@@ -70,7 +57,7 @@ var TodoApp = React.createClass({
             <div className="container">
               {/* we need to pass in the prop we decided to name onSearch  */}
               <TodoSearch onSearch={this.handleSearch} />
-              <TodoList todos={filteredTodos} onToggle={this.handleToggle} />
+              <TodoList />
               {/* pass down the onAddTodo prop we created. call handleAddTodo function! */}
               <AddTodo onAddTodo={this.handleAddTodo} />
             </div>
@@ -78,7 +65,7 @@ var TodoApp = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 });
 
 module.exports = TodoApp;
