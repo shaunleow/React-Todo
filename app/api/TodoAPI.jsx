@@ -29,6 +29,7 @@ module.exports = {
   },
 
   filterTodos: function(todos, showCompleted, searchText) {
+    searchText = searchText.toLowerCase();
     return (
       todos
         // filter by showCompleted aka show everything. we name the arg todo.
@@ -36,7 +37,7 @@ module.exports = {
         // filter by searchText
         .filter(
           todo =>
-            !searchText || todo.text.toLowerCase().indexOf(searchText) != -1,
+            !searchText || todo.text.toLowerCase().indexOf(searchText) != -1
         )
         // sort todos by non-completed first
         .sort((a, b) => {
@@ -49,5 +50,5 @@ module.exports = {
           }
         })
     );
-  },
+  }
 };

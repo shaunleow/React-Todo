@@ -4,49 +4,11 @@ var moment = require('moment');
 
 import TodoList from 'TodoList';
 import AddTodo from 'AddTodo';
-var TodoSearch = require('TodoSearch');
+import TodoSearch from 'TodoSearch';
 var TodoAPI = require('TodoAPI');
 
 var TodoApp = React.createClass({
-  getInitialState: function() {
-    return {
-      showCompleted: false, // when start application, only show unfinished todos
-      searchText: '', // we want to return all todo items no matter what the text is
-      todos: TodoAPI.getTodos() // start with local storage
-    };
-  },
-  // this gets fired after either the props or state for the component changes
-  componentDidUpdate: function() {
-    TodoAPI.setTodos(this.state.todos); // any changes to the state will set todos
-  },
-  // we would like this to update the todos array which is a state property
-  handleAddTodo: function(text) {
-    this.setState({
-      todos: [
-        ...this.state.todos,
-        {
-          id: uuid(),
-          text: text,
-          completed: false,
-          createdAt: moment().unix(),
-          completedAt: undefined
-        }
-      ]
-    });
-  },
-  // pass in the two values thats going to come from TodoSearch component
-  // this component maintains the state. the rest is presentational and responds to user interaction
-  handleSearch: function(showCompleted, searchText) {
-    this.setState({
-      showCompleted: showCompleted,
-      searchText: searchText.toLowerCase() // upper or lowercase wont affect search
-    });
-  },
   render: function() {
-    var { todos, showCompleted, searchText } = this.state;
-    // render out search
-    var filteredTodos = TodoAPI.filterTodos(todos, showCompleted, searchText);
-
     return (
       <div>
         <h1 className="page-title">Things To Do</h1>
@@ -56,10 +18,10 @@ var TodoApp = React.createClass({
           <div className="column small-centered small-11 medium-6 large-5">
             <div className="container">
               {/* we need to pass in the prop we decided to name onSearch  */}
-              <TodoSearch onSearch={this.handleSearch} />
+              <TodoSearch />
               <TodoList />
               {/* pass down the onAddTodo prop we created. call handleAddTodo function! */}
-              <AddTodo onAddTodo={this.handleAddTodo} />
+              <AddTodo />
             </div>
           </div>
         </div>
