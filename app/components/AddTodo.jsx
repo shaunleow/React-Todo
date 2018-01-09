@@ -12,7 +12,7 @@ export var AddTodo = React.createClass({
 
     if (todoText.length > 0) {
       this.refs.todoText.value = ''; // clear the value
-      dispatch(actions.addToDo(todoText)); // dispatch action
+      dispatch(actions.startAddTodo(todoText)); // dispatch action
     } else {
       this.refs.todoText.focus(); // if there's no valid data it'll put the cursor back in the field automatically
     }
