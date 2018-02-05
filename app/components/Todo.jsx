@@ -27,7 +27,7 @@ export var Todo = React.createClass({
         className={todoClassName}
         onClick={() => {
           // this.props.onToggle(id);
-          dispatch(actions.toggleToDo(id));
+          dispatch(actions.startToggleTodo(id, !completed));
         }}
       >
         <div>

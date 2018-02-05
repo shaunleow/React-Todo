@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 var expect = require('expect');
 var actions = require('actions');
 
+import firebase, { firebaseRef } from 'app/firebase/';
 var createMockStore = configureMockStore([thunk]);
 
 describe('Actions', () => {
@@ -78,11 +79,80 @@ describe('Actions', () => {
 
   it('should toggle todo action', () => {
     var action = {
-      type: 'TOGGLE_TODO',
-      id: '123'
+      type: 'UPDATE_TODO',
+      id: '123',
+      updates: {
+        completed: false
+      }
     };
-    var response = actions.toggleToDo(action.id);
+    var response = actions.updateTodo(action.id, action.updates);
 
     expect(response).toEqual(action);
+  });
+
+  describe('Tests with firebase todos', () => {
+    var testTodoRef;
+
+    beforeEach(done => {
+      var todosRef = firebaseRef.child('todos');
+
+      // wipe all the items so tests start with a clean slate
+      todosRef
+        .remove()
+        .then(() => {
+          testTodoRef = firebaseRef.child('todos').push();
+
+          testTodoRef.set({
+            text: 'Something to do',
+            completed: false,
+            createdAt: 433222
+          });
+        })
+        .then(() => done())
+        .catch(done);
+    });
+
+    afterEach(done => {
+      testTodoRef.remove().then(() => {
+        done();
+      });
+    });
+
+    it('should toggle todo and dispatch UPDATE_TODO action', done => {
+      const store = createMockStore({});
+      const action = actions.startToggleTodo(testTodoRef.key, true);
+
+      store.dispatch(action).then(() => {
+        const mockActions = store.getActions();
+
+        expect(mockActions[0]).toInclude({
+          type: 'UPDATE_TODO',
+          id: testTodoRef.key
+        });
+
+        expect(mockActions[0].updates).toInclude({
+          completed: true
+        });
+
+        expect(mockActions[0].updates.completedAt).toExist();
+
+        done();
+      }, done);
+    });
+
+    it('should populate todos and dispatch ADD_TODOS', done => {
+      const store = createMockStore({});
+      const action = actions.startAddTodos();
+
+      store.dispatch(action).then(() => {
+        const mockActions = store.getActions();
+
+        expect(mockActions[0].type).toEqual('ADD_TODOS');
+        expect(mockActions[0].todos.length).toEqual(1);
+        expect(mockActions[0].todos[0].text).toEqual('Something to do');
+
+        done();
+      }, done);
+    });
   });
 });

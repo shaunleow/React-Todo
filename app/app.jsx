@@ -9,17 +9,7 @@ var actions = require('actions');
 // call configure function in configureStore and now you can start firing actions
 var store = require('configureStore').configure();
 
-// listen for changes with subscribe. store.getState returns state object
-store.subscribe(() => {
-  var state = store.getState();
-  console.log('New state', state);
-  TodoAPI.setTodos(state.todos);
-});
-
-// add on to the array of todo items
-var initialTodos = TodoAPI.getTodos();
-// create new action addTodos to bulk add todos
-store.dispatch(actions.addTodos(initialTodos));
+store.dispatch(actions.startAddTodos());
 
 // Load foundation
 $(document).foundation();
